@@ -52,7 +52,6 @@ const newPassport = function (person) {
 newPassport(Kama);
 checkIn(flight, Kama);
 
-*/
 
 // first-class and higher- order function
 // functions that accept order function as call back functions
@@ -70,7 +69,7 @@ const upperFirstWord = function (str) {
 const transformer = function (str, fn) {
   console.log(`Original strings: ${str}`);
   console.log(`Transformed strings: ${fn(str)}`);
-
+  
   console.log(`Transformed by: ${fn.name}`);
 };
 
@@ -83,3 +82,84 @@ const high5 = function () {
   console.log('Welcome');
 };
 document.body.addEventListener('click', high5);
+
+
+const greet = function (greeting) {
+  return function (name) {
+    console.log(`${greeting} ${name}`);
+  };
+};
+
+const greeterHey = greet('Hey');
+greeterHey('Kama');
+greeterHey('Joseph');
+
+greet('Hello')('Kama');
+
+// arrow fn
+
+// const greet1 = greeting1 => {
+  //   return function (name1) {
+    //     console.log(`${greeting1} ${name1}`);
+    //   };
+    // };
+    // const greeterHey1 = greet1('hey');
+    // greeterHey1('Kama');
+    // greeterHey1('Joseph');
+    
+    const greet1 = greeting1 => name1 => console.log(`${greeting1} ${name1}`);
+    
+    greet1('Hi')('Kama');
+    
+    */
+
+// the call and apply methods
+
+const lufthansa = {
+  airline: 'Lufthansa',
+  iataCode: 'LM',
+  bookings: [],
+  book(flightNum, name) {
+    console.log(
+      `${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`
+    );
+    this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
+  },
+};
+
+lufthansa.book(237, 'Kama Seleye-Fubara');
+lufthansa.book(2334, 'Anju Seleye-Fubara');
+console.log(lufthansa);
+
+const eurowings = {
+  airline: 'Eurowings',
+  iataCode: 'EW',
+  bookings: [],
+};
+const book = lufthansa.book;
+
+// Does not work
+// book(23,'james)
+
+// call Method
+book.call(eurowings, 23, 'Kama fubara');
+console.log(eurowings);
+
+book.call(lufthansa, 23, 'Mary cooper');
+console.log(lufthansa);
+
+const swiss = {
+  airline: 'Swiss Air Lines',
+  iataCode: 'LX',
+  bookings: [],
+};
+
+book.call(swiss, 583, 'Joe punk');
+console.log(swiss);
+
+// Apply method
+const flightData = [583, 'George Joy'];
+book.apply(swiss, flightData);
+console.log(swiss);
+
+book.call(swiss, ...flightData);
