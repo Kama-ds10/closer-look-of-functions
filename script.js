@@ -163,3 +163,27 @@ book.apply(swiss, flightData);
 console.log(swiss);
 
 book.call(swiss, ...flightData);
+
+// binding method
+// book.call(eurowings, 23, 'Kama fubara');
+const bookEw = book.bind(eurowings);
+const bookLH = book.bind(lufthansa);
+const bookLX = book.bind(swiss);
+
+bookEw(23, 'Kate');
+
+const bookEw23 = book.bind(eurowings, 23);
+bookEw23('Kama seleye-fubara');
+bookEw23('James mounre');
+
+// with event listeners
+lufthansa.planes = 300;
+lufthansa.buyPlane = function () {
+  console.log(this);
+
+  this.planes++;
+  console.log(this.planes);
+};
+lufthansa.buyPlane();
+
+document.querySelector('.buy').addEventListener('click', lufthansa.buyPlane);
